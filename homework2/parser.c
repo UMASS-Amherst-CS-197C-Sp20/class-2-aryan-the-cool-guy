@@ -25,17 +25,67 @@
 
 //include fprintf and fscanf
 
+#include <stdio.h>
+
 //begin your main function
+
+int main(void)
+{
 
 //open ints.txt, chars.txt, and floats.txt for writing
 //open input.txt for reading
 //don't forget that the file access mode is different for each!
 
+FILE* ints  = fopen("ints.txt", "w+");
+FILE* chars  = fopen("chars.txt", "w+");
+FILE* floats = fopen("floats.txt", "w+");
+FILE* input = fopen("input.txt", "r+");
+
+
 //create a char variable to hold the flags you read	
+
+char c[255];
 
 //create an int, char, and float variable to hold the int, char, and float values you read
 
+int newInt[255];
+char newChar[255];
+float newFloat[255];
+
 //while fscanf does not return an EOF error
+
+while(fscanf(input, "%s", c) != EOF)
+{
+switch(*c)
+{
+	case 'C':
+		while(fscanf(input, "%s", newChar) != EOF)
+		{
+			fputs(newChar, chars);
+			fputs(" ", chars);
+			break;
+		}
+	break;}
+
+	case 'I':
+                while(fscanf(input, "%d", newInt) != EOF)
+                {
+                        fputs(newInt, ints);
+                        fputs(" ", ints);
+                        break;
+                }
+        break;
+
+        case 'F':
+                while(fscanf(input, "%f", newFloat) != EOF)
+                {
+                        fputs(newFloat, floats);
+                        fputs(" ", floats);
+                        break;
+                }
+        break;
+}
+
 //read in a flag from input.txt
 
 //if it stands for an int
@@ -52,3 +102,11 @@
 
 //once fscanf returns and EOF error return a successful exit status
 
+fclose(ints);
+fclose(chars);
+fclose(floats);
+fclose(input);
+
+return 0;
+
+}
